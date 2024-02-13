@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import "./Signup.css"
 
+const URL = process.env.REACT_APP_URL || "http://localhost:5000";
+
 function SignUp() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -9,7 +11,7 @@ function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/signup', { username, password });
+            await axios.post(`${URL}/api/signup`, { username, password });
             alert('User created successfully');
             window.location.replace("/login");
         } catch (error) {

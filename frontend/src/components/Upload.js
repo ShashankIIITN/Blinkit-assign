@@ -3,6 +3,7 @@ import axios from 'axios';
 import "./UploadModal.css"
 import ReactDom from 'react-dom';
 
+const URL = process.env.REACT_APP_URL || "http://localhost:5000";
 
 function UploadImage({ open, onClose }) {
 
@@ -19,7 +20,7 @@ function UploadImage({ open, onClose }) {
         const formData = new FormData();
         formData.append('image', image);
         try {
-            await axios.post('http://localhost:5000/api/upload', formData, {
+            await axios.post(`${URL}/api/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'access_token': localStorage.getItem('token')

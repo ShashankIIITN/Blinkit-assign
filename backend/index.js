@@ -7,6 +7,8 @@ import js from 'jsonwebtoken';
 import { extname } from 'path';
 import cors from 'cors';
 import { GetUser } from './middlewares/getuser.js';
+import { configDotenv } from 'dotenv';
+configDotenv();
 
 
 
@@ -15,8 +17,8 @@ const app = express();
 app.use(bodyparser.json());
 app.use(cors());
 
-
-mongoose.connect('mongodb://0.0.0.0:27017/mern_image_upload', {
+const URI = process.env.URI || "mongodb://0.0.0.0:27017/mern_image_upload";
+mongoose.connect(URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(() => console.log('MongoDB connected'))
@@ -26,6 +28,7 @@ mongoose.connect('mongodb://0.0.0.0:27017/mern_image_upload', {
 import User from './models/User.js';
 import Image from './models/Image.js';
 
+//if want to store data in the disk instead of mongoDb
 
 // const storage = diskStorage({
 //     destination: (req, file, cb) => {
@@ -91,9 +94,9 @@ app.post('/api/upload', upload.single('image'), GetUser, async (req, res) => {
 });
 app.get('/api/fetch-images', GetUser, async (req, res) => {
     try {
-        
-        const data = await Image.find({userId: req.user.id});
-        
+
+        const data = await Image.find({ userId: req.user.id });
+
         res.send(JSON.stringify(data));
     } catch (error) {
         res.status(500).send('Error uploading image');

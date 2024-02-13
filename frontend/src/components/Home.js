@@ -5,6 +5,8 @@ import axios from "axios";
 import UploadImage from './Upload';
 import {Buffer} from "buffer";
 
+const URL = process.env.REACT_APP_URL || "http://localhost:5000";
+
 function Home() {
 
   const [open, setopen] = useState(false);
@@ -40,7 +42,7 @@ function Home() {
 
   const fecthImages = async () => {
     try {
-      const data = await axios.get('http://localhost:5000/api/fetch-images', {
+      const data = await axios.get(`${URL}/api/fetch-images`, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'access_token': localStorage.getItem('token')
