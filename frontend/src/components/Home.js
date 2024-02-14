@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Home.css"
 import axios from "axios";
 import UploadImage from './Upload';
-import {Buffer} from "buffer";
+import { Buffer } from "buffer";
 
 const URL = process.env.REACT_APP_URL || "http://localhost:5000";
 
@@ -88,10 +88,13 @@ function Home() {
           {
             imgdata.map((item, index) => {
 
-              if(!item.data) return null;
+              if (!item.data) return null;
               const buffer = Buffer.from(item.data?.data);
               const base64ImageData = buffer.toString('base64');
-              return <img src={'data:image/jpeg;base64,' + base64ImageData} alt="" srcset="" />
+              return <div className="imginstance">
+                <img src={'data:image/jpeg;base64,' + base64ImageData} alt="" srcset="" />
+                <h4>{item?.name}</h4>
+              </div>
             })
           }
         </div>}
